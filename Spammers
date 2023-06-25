@@ -1,0 +1,160 @@
+wait(1)
+ 
+-- Get LocalPlayer
+local p = game.Players.LocalPlayer
+ 
+-- Instance New Objects
+local gui = Instance.new('ScreenGui',p.PlayerGui)
+local frame = Instance.new('Frame',gui)
+local open = Instance.new('TextButton',gui)
+local bool = Instance.new('BoolValue',frame)
+local bt = Instance.new('StringValue',bool)
+local tips = Instance.new('TextLabel',frame)
+local name = Instance.new('TextLabel',frame)
+local box = Instance.new('TextBox',frame)
+local msg = Instance.new('StringValue',box)
+local exit = Instance.new('TextButton',frame)
+local spamon = Instance.new('TextButton',frame)
+local spamoff = Instance.new('TextButton',frame)
+ 
+-- Objects Name
+gui.Name = "SpamGUI"
+frame.Name = "SpawnFrame"
+open.Name = "OpenButton"
+bool.Name = "Bool"
+bt.Name = "Tips"
+tips.Name = "SwitchTips"
+name.Name = "Title"
+box.Name = "TextBox"
+msg.Name = "Msg"
+exit.Name = "ExitButton"
+spamon.Name = "SpamON"
+spamoff.Name = "SpamOFF"
+ 
+-- Objects Position
+frame.Position = UDim2.new(0.7,7,0,3)
+open.Position = UDim2.new(0,-100,0.7,0)
+tips.Position = UDim2.new(0,170,0.7,13)
+name.Position = UDim2.new(0,0,0,0)
+box.Position = UDim2.new(0,0,0,45)
+exit.Position = UDim2.new(0.8,30,0,0)
+spamon.Position = UDim2.new(0,5,0.7,13)
+spamoff.Position = UDim2.new(0,245,0.7,13)
+ 
+-- Object Size
+frame.Size = UDim2.new(0,400,0,200)
+open.Size = UDim2.new(0,100,0,40)
+tips.Size = UDim2.new(0,60,0,40)
+name.Size = UDim2.new(0.8,25,0,40)
+box.Size = UDim2.new(1,0,0,100)
+exit.Size = UDim2.new(0,50,0,43)
+spamon.Size = UDim2.new(0,150,0,40)
+spamoff.Size = UDim2.new(0,150,0,40)
+ 
+-- Dragggable Frame
+frame.Active = true
+frame.Draggable = true
+ 
+-- Objects Background Color
+frame.BackgroundColor3 = Color3.new(0,0,0)
+open.BackgroundColor3 = Color3.new(255, 255, 0)
+tips.BackgroundColor3 = Color3.new(255, 255, 255)
+name.BackgroundColor3 = Color3.new(255, 255, 255)
+box.BackgroundColor3 = Color3.new(255, 255, 255)
+exit.BackgroundColor3 = Color3.new(255, 0, 0)
+spamon.BackgroundColor3 = Color3.new(255, 0, 0)
+spamoff.BackgroundColor3 = Color3.new(255, 0, 0)
+ 
+-- Object Background Transparency
+frame.BackgroundTransparency = 0.5
+box.BackgroundTransparency = 0.5
+tips.BackgroundTransparency = 0.6
+name.BackgroundTransparency = 1
+ 
+-- Visible
+open.Visible = false
+ 
+-- Text Size/Scaled enabled
+open.TextScaled = true
+exit.TextScaled = true
+spamon.TextScaled = true
+spamoff.TextScaled = true
+box.TextScaled = true
+tips.TextScaled = true
+name.TextScaled = true
+ 
+-- Box Line
+box.ClearTextOnFocus = true
+box.MultiLine = true
+ 
+-- Text Color
+name.TextColor3 = Color3.new(255,0,0)
+ 
+-- Text
+open.Text = "Open"
+exit.Text = "Exit"
+spamoff.Text = "Turn Off"
+spamon.Text = "Turn On"
+box.Text = "Message Here ....."
+tips.Text = "OFF"
+name.Text = "Unique's Spam GUI"
+ 
+-- Value
+bool.Value = false
+bt.Value = "OFF"
+msg.Value = ""
+ 
+-- Spam On
+spamon.MouseButton1Down:connect(function()
+bool.Value = true
+tips.Text = "ON"
+msg.Value = box.Text
+box.Text = "Success !"
+wait(1)
+box.Text = "Message Here ....."
+end)
+ 
+-- Spam Off
+spamoff.MouseButton1Down:connect(function()
+tips.Text = "OFF"
+bool.Value = false
+end)
+ 
+-- Exit Function
+exit.MouseButton1Down:connect(function()
+frame:TweenPosition(UDim2.new(1,0,0,3),"Out","Quad",1,true)
+wait(1)
+frame.Visible = false
+wait(.5)
+open.Visible = true
+open:TweenPosition(UDim2.new(0,5,0.7,0),"Out","Bounce",1,true)
+end)
+ 
+-- Open Function
+open.MouseButton1Down:connect(function()
+open:TweenPosition(UDim2.new(0,-100,0.7,0),"Out","Quad",1,true)
+wait(1)
+open.Visible = false
+wait(.5)
+frame.Visible = true
+frame:TweenPosition(UDim2.new(0.7,7,0,3),"Out","Bounce",1,true)
+end)
+ 
+-- Spam Function
+while true do
+wait(.1)
+ if bool.Value == true then
+for i,v in pairs(game.Players:GetChildren()) do
+game:GetService('Chat'):Chat(v.Character, msg.Value)
+end
+end
+end
+ 
+-- Tips Changer
+bool.Changed:connect(function()
+if bool.Value == true then
+bt.Value = "ON"
+else
+bt.Value = "OFF"
+end
+end)
